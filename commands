@@ -1,9 +1,0 @@
-./darknet detector demo cfg/coco.data cfg/yolo.cfg yolo.weights
-
-./darknet detector demo cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights
-
-python main.py
-
-mogrify -resize 320x320 *.jpg
-
-rename 's/.jpg$/.JPEG/' *.jpg
