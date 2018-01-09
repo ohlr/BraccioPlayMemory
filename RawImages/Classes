@@ -1,0 +1,37 @@
+voc:
+
+aeroplane
+bicycle
+bird
+boat
+bottle
+bus
+car
+cat
+chair
+cow
+diningtable
+dog
+horse
+motorbike
+person
+pottedplant
+sheep
+sofa
+train
+tvmonitor
+
+our classes:
+(x) already contained in voc
+
+001: Boat (x)
+002: Person_Girl (x)
+003: Person_Boy (x)
+004: Horse (x)
+005: Bird European (x)
+006: Bird Tropic (x)
+
+007: Distel
+008: Compleetly blue card
+009: Tree
+010: Annanas
