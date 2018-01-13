@@ -6,18 +6,18 @@ from pathlib import Path
 def main():
     directory = path.join(os.getcwd(), 'Labels_merged')
 
-    shutil.rmtree(directory)
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+    if os.path.exists(directory):
+        shutil.rmtree(directory)
+    os.makedirs(directory)
 
     for image in glob.glob('./Images/*/*.JPEG'):
         image_paths = image.split(os.sep)
 
         image_src = image_paths[len(image_paths)-1]
-        image_dest = path.join(directory, image_src)
+        image_dest = path.join(directory, image_src).replace(".JPEG", ".jpg")
         image_exists = Path(image_dest).is_file()
 
-        category_id = image_paths[len(image_paths) - 2]
+        category_id = image_paths[len(image_paths) - 2].replace(' ', '')
         labeled_file_src = path.join(os.getcwd(), 'Labels_out', category_id, image_src.replace('.JPEG', '.txt'))
         labeled_file_dst = path.join(directory, image_src.replace('.JPEG', '.txt'))
 
