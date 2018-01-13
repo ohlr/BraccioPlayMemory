@@ -3,8 +3,6 @@ yolo.weights
 *.dSYM
 *.csv
 *.out
-*.png
-*.jpg
 *.pyc
 old/
 mnist/
