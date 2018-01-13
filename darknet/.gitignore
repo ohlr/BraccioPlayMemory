@@ -1,3 +1,4 @@
+cfg/obj.data
 yolo.weights
 *.o
 *.dSYM

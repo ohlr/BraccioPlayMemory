@@ -14,5 +14,10 @@ For questions or issues please use the [Google Group](https://groups.google.com/
 ./darknet detector train cfg/obj.data cfg/yolo-obj.cfg darknet19_448.conv.23
 ```
 
+```bash
+cp cfg/obj.data.example cfg/obj.data
+sed -i "/home/oskar/OneDrive/YoloV2/darknet:${pwd}"
+```
+
 obj.data file
 config the absolute paths of train and test
