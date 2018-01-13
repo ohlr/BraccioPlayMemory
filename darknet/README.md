@@ -21,3 +21,11 @@ sed -i "/home/oskar/OneDrive/YoloV2/darknet:${pwd}"
 
 obj.data file
 config the absolute paths of train and test
+
+run 
+
+```bash
+make
+```
+
+requires OpenCV, otherwise set OpenCV=0 in makefile
