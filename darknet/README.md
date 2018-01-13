@@ -16,7 +16,7 @@ For questions or issues please use the [Google Group](https://groups.google.com/
 
 ```bash
 cp cfg/obj.data.example cfg/obj.data
-sed -i "/home/oskar/OneDrive/YoloV2/darknet:${pwd}"
+sed 's?/home/oskar/OneDrive/YoloV2/darknet?'`pwd`'?' cfg/obj.data
 ```
 
 obj.data file
