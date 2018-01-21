@@ -3,7 +3,7 @@ yolo_model:
   config_file:
     name: yolo-obj-webCam.cfg
   weight_file:
-    name: yolo-obj-1200.weights
+    name: yolo-obj-1500.weights
   threshold:
     value: 0.5
   detection_classes:
