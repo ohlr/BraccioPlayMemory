@@ -1,5 +1,9 @@
 # BraccioPlayMemory
 
+## restricted access to the following lab computers:
+
+ atbeetz11 atbeetz18 atbeetz19 atbeetz21 atbeetz25 in 02.09.038 
+
 ## Tasks:
 
 ### First prio:

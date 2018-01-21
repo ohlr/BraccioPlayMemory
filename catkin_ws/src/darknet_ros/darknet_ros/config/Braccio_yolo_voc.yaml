@@ -1,0 +1,20 @@
+yolo_model:
+
+  config_file:
+    name: yolo-obj-webCam.cfg
+  weight_file:
+    name: yolo-obj-1200.weights
+  threshold:
+    value: 0.5
+  detection_classes:
+    names:
+      - Boat
+      - Girl
+      - Boy
+      - Horse
+      - EuropeanBird
+      - PacificBird
+      - Flower
+      - BlueCard
+      - Tree
+      - Pineapple
