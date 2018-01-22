@@ -42,7 +42,7 @@ Publishes an array of bounding boxes that gives information of the position and 
 
 `rostopic echo /darknet_ros/bounding_boxes` 
 (source devel/setup.bash before)
-`rostopic echo /rknet_ros/bounding_boxes/boundingBoxes[0]/Class`
+`rostopic echo /darknet_ros/bounding_boxes/boundingBoxes[0]/Class`
 
 `detection_image` ([sensor_msgs::Image])
 
