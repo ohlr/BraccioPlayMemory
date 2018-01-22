@@ -30,6 +30,25 @@ eg.
 `rosbag play <your bagfile>`  
 
 ---
+### Published Topics
+
+`/darknet_ros/found_object ` ([std_msgs::Int8])
+
+Publishes the number of detected objects.
+
+`/darknet_ros/bounding_boxes` ([darknet_ros_msgs::BoundingBoxes])
+
+Publishes an array of bounding boxes that gives information of the position and size of the bounding box in pixel coordinates.
+
+`rostopic echo /darknet_ros/bounding_boxes` 
+(source devel/setup.bash before)
+`rostopic echo /rknet_ros/bounding_boxes/boundingBoxes[0]/Class`
+
+`detection_image` ([sensor_msgs::Image])
+
+Publishes an image of the detection image including the bounding boxes.
+
+---
 ### Notes:
 * In case anyone who wants to know, here's what I have adjust:  
 
