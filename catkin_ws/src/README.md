@@ -16,3 +16,8 @@ roslaunch darknet_ros Braccio_darknet_ros.launch
 ```
 roslaunch usb_cam usb_cam-test.launch 
 ```
+
+Usb_Cam test
+specify camera in 
+usb_cam-test.launch with
+    <param name="video_device" value="/dev/video2" />
