@@ -47,3 +47,10 @@ nvidia-smi
 
 ./darknet detector train cfg/obj.data cfg/yolo-obj.cfg tiny-yolo-voc.weights
 ```
+
+### Working with Google Cloud Service
+(If instance does not restart with GPU, change region to eaurope-west1-d)
+Create ssh key: add user name
+Add ssh key to instance (see Google PDF)
+Install gcloud tool or use Google Cloud Shell
+Connect with gcloud compute ssh instance-2 --zone europe-west1-d

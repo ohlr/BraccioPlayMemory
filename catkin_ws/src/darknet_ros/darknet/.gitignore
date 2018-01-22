@@ -2,12 +2,12 @@
 *.dSYM
 *.csv
 *.out
-*.png
-*.jpg
+#*.png
+#*.jpg
 *.pyc
 old/
 mnist/
-data/
+#data/
 caffe/
 grasp/
 images/
