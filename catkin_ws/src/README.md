@@ -22,7 +22,9 @@ change `<param name="video_device" value="/dev/video0" />` to /dev/videoX
 --- 
 ### Record webcam as rosbag:
 * [Record](http://wiki.ros.org/rosbag/Commandline#record):  
-eg. `$ rosbag record --duration=30 -a`  
+eg.  
+1. Run usb_cam roslaunch.
+2. `$ rosbag record --duration=30 -a`  
 * [Playback](http://wiki.ros.org/rosbag/Tutorials/Recording%20and%20playing%20back%20data):  
 `rosbag play <your bagfile>`  
 
