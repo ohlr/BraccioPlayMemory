@@ -1,3 +1,4 @@
+
 #include "ros/ros.h"
 #include "std_msgs/MultiArrayLayout.h"
 #include "std_msgs/MultiArrayDimension.h"
@@ -7,14 +8,14 @@
 #include "std_msgs/String.h"
 #include "std_msgs/Int8.h"
 
+// darknet_ros_msgs
+#include <darknet_ros_msgs/BoundingBoxes.h>
+#include <darknet_ros_msgs/BoundingBox.h>
+
 #include <string>
 using namespace std;
 
-#define PI 3.1416
 
-// Umrechnung Radian->Degree
-// pi=180°
-// aRadien/pi*180
 
 /**
  * This tutorial demonstrates simple receipt of messages over the ROS system.
@@ -45,10 +46,10 @@ void NumObjectsCallback(const std_msgs::Int8::ConstPtr& msg)
 
 }
 
-// void labelCallback(const std_msgs::String::ConstPtr& msg)
-// {
-//   ROS_INFO("I heard: [%s]", msg->data.c_str());
-// }
+ void labelCallback(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg)
+ {
+   ROS_INFO("I heard: [%s]", msg->boundingBoxes[0].Class.c_str());
+ }
 
 //needs the detected Label (0-10) as input 
 void matchAngleCard(uint baseAngle, uint memoryLabel)
@@ -198,7 +199,7 @@ int main(int argc, char **argv)
 
    ros::Subscriber sub1 = n.subscribe("darknet_ros/found_object", 1, NumObjectsCallback);
 
-   //ros::Subscriber sub2 = n.subscribe("/darknet_ros/bounding_boxes/boundingBoxes", 1000, labelCallback);
+   ros::Subscriber sub2 = n.subscribe("/darknet_ros/bounding_boxes/boundingBoxes", 1000, labelCallback);
 
 
    //darknet_ros/found_object ([std_msgs::Int8])
