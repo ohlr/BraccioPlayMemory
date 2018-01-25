@@ -199,7 +199,7 @@ int main(int argc, char **argv)
 
    ros::Subscriber sub1 = n.subscribe("darknet_ros/found_object", 1, NumObjectsCallback);
 
-   ros::Subscriber sub2 = n.subscribe("/darknet_ros/bounding_boxes/boundingBoxes", 1000, labelCallback);
+   ros::Subscriber sub2 = n.subscribe("/darknet_ros/bounding_boxes", 1000, labelCallback);
 
 
    //darknet_ros/found_object ([std_msgs::Int8])
