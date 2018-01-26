@@ -43,6 +43,7 @@ uint _BaseAngle = 0;
 uint _Shoulder =  _ShoulderSearch;
 uint _Elbow = _ElbowSearch;
 uint _Wrist = _WristSearch;
+uint _MagnetOn = 0;
 uint _NumObjects=0;
 
 bool _MovingUp=true;
@@ -98,7 +99,7 @@ void movingInCircle(uint& baseAngle, bool& movingUp)
 
 }
 
-void movingToStack(uint& baseAngle, bool& moveToStack, bool& dropCard)
+void movingToStack(uint& baseAngle, uint& MagnetOn, bool& moveToStack, bool& dropCard)
 {
 	if(baseAngle<180)
 	{
@@ -109,6 +110,7 @@ void movingToStack(uint& baseAngle, bool& moveToStack, bool& dropCard)
 	{
 		moveToStack=false;
 		dropCard=true;
+    MagnetOn=0;
 	}
 }
 
@@ -258,7 +260,7 @@ int main(int argc, char **argv)
   _DataArray[2]=_Elbow; //Elbow
   _DataArray[3]=_WristSearch; //WristVertical
   _DataArray[4]=uint(90); //WristRotation
-  _DataArray[5]=uint(73); //Gripper Closed
+  _DataArray[5]=_MagnetOn; //Magnet ON
 
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
@@ -325,6 +327,7 @@ int main(int argc, char **argv)
       ROS_INFO("I found the first Memory Card");
       _Searching = false;
       _MoveAboveCard=true;
+      _MagnetOn=1;
     }
 
 
@@ -337,6 +340,7 @@ int main(int argc, char **argv)
       _Searching=false;
       //grab Card
       _MoveAboveCard=true;
+      _MagnetOn=1;
     }
 
 
@@ -366,7 +370,7 @@ int main(int argc, char **argv)
 
     if(_MoveToStack==true)
     {
-       movingToStack(_BaseAngle, _MoveToStack, _DropCard);
+       movingToStack(_BaseAngle, _MagnetOn, _MoveToStack, _DropCard);
        //runs to 180°
        //sets move to stack to false when arrived
        //sets drop Cart to true
@@ -390,12 +394,12 @@ int main(int argc, char **argv)
   _DataArray[2]=_Elbow; //Elbow
   _DataArray[3]=_Wrist; //WristVertical
   _DataArray[4]=uint(90); //WristRotation
-  _DataArray[5]=uint(73); //Gripper Closed
+  _DataArray[5]=_MagnetOn; //Gripper Closed
 
     ROS_INFO(" ");
     ROS_INFO("NumObjects: [%d]; Current Label: [%s]; _FirstDetectedLabel: [%s]", _NumObjects, _CurrentLabel.c_str(), _FirstDetectedLabel.c_str());
     ROS_INFO("_MovingUp: [%d]; _Searching: [%d], MoveToStack: [%d], DropCard: [%d], GrabCard: [%d], MoveToSearchPosition: [%d]", _MovingUp,_Searching,_MoveToStack, _DropCard, _GrabCard, _MoveToSearchPosition);
-    ROS_INFO("_BaseAngle: [%d] , _Shoulder: [%d], _Elbow: [%d], _Wrist: [%d]",_BaseAngle,_Shoulder,_Elbow, _Wrist);
+    ROS_INFO("_BaseAngle: [%d] , _Shoulder: [%d], _Elbow: [%d], _Wrist: [%d], MagnetOn: [%d]",_BaseAngle,_Shoulder,_Elbow, _Wrist, _MagnetOn);
 
     //for loop, pushing data in the size of the array
     for (int i = 0; i < 6; i++)
