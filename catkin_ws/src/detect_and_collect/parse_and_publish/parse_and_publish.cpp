@@ -16,7 +16,21 @@
 using namespace std;
 
 
+#define _ShoulderSearch  92
+#define _ShoulderGrab 77
+#define _SholderDrop 90
+#define _ShoulderTransport 95
 
+#define _ElbowSearch 0
+#define _ElbowGrab 10
+#define _ElbowDrop 15
+#define _ElbowTransport 10
+
+#define _WristSearch 0
+#define _WristGrab 0
+#define _WristTransport 10
+
+#define _StackAngle 150 //Cards are dropped at 180 ° searching area is 0-150°
 /**
  * This tutorial demonstrates simple receipt of messages over the ROS system.
  */
@@ -25,16 +39,19 @@ uint _DataArray[6];
 string _CurrentLabel = "none";
 string _FirstDetectedLabel = "none";
 
-uint _BaseAngle=0;
-uint _Elbow=10;
-uint _Shoulder=95;
+uint _BaseAngle = 0;
+uint _Shoulder =  _ShoulderSearch;
+uint _Elbow = _ElbowSearch;
+uint _Wrist = _WristSearch;
 uint _NumObjects=0;
 
 bool _MovingUp=true;
 bool _Searching=true;
 bool _MoveToStack=false;
+bool _LiftCard=false;
 bool _MoveToSearchPosition=false;
 bool _DropCard=false;
+bool _MoveAboveCard=false;
 bool _GrabCard=false;
 
 //updated cyclicly
@@ -59,7 +76,7 @@ void labelCallback(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg)
 
 void movingInCircle(uint& baseAngle, bool& movingUp)
 {  
-    if(baseAngle==170)
+    if(baseAngle==_StackAngle)
     {
       movingUp=false;
     }
@@ -79,7 +96,6 @@ void movingInCircle(uint& baseAngle, bool& movingUp)
       baseAngle--;
     }
 
-    _DataArray[0]=baseAngle; //Base
 }
 
 void movingToStack(uint& baseAngle, bool& moveToStack, bool& dropCard)
@@ -96,75 +112,140 @@ void movingToStack(uint& baseAngle, bool& moveToStack, bool& dropCard)
 	}
 }
 
-void grabCard(uint& Shoulder, uint& Elbow, bool& moveToStack, bool& grabCard)
+void grabCard(uint& Shoulder, uint& Elbow, uint& Wrist, bool& LiftCard, bool& grabCard)
 {
-	if(Shoulder>90)
+	if(Shoulder>_ShoulderGrab)
 	{
 		Shoulder--;
 	}
-	if (Elbow>5)
-	{
-		Elbow--;
-	}
+  if(Shoulder<_ShoulderGrab)
+  {
+    Shoulder++;
+  }
 
-  _DataArray[1]=Shoulder; //Shoulder
-  _DataArray[2]=Elbow; //Elbow
+	if (Elbow<_ElbowGrab)
+	{
+		Elbow++;
+	}
+  if (Elbow>_ElbowGrab)
+  {
+    Elbow--;
+  }
+
+  
+  if (Wrist<_WristGrab)
+  {
+    Wrist++;
+  }
+  if (Wrist>_WristGrab)
+  {
+    Wrist--;
+  }
 
   //move gripper into standard position
-  if(Shoulder==90 && Elbow == 5)
+  if(Shoulder==_ShoulderGrab && Elbow == _ElbowGrab && Wrist == _WristGrab)
   {
-  	Shoulder=95;
-  	Elbow=10;
-  	_DataArray[1]=Shoulder; //Shoulder
-	  _DataArray[2]=Elbow; //Elbow
-	    //now Move card to stack
-	  moveToStack = true;
+    //now Move card to stack
+	  LiftCard = true;
     grabCard = false;
   }
 
     //eventually add entry for magnet Implementation
 }
 
-void DropCard(uint& Shoulder, uint& Elbow, bool& moveToSearchPosition, bool& movingUp, bool& dropCard)
+void LiftGripper(uint& Shoulder, uint& Elbow, uint& Wrist, bool& moveToStack, bool& LiftCard, bool& MoveAboveCard, bool& grabCard)
 {
-	if(Shoulder>90)
+  if(Shoulder>_ShoulderTransport)
+  {
+    Shoulder--;
+  }
+  if(Shoulder<_ShoulderTransport)
+  {
+    Shoulder++;
+  }
+
+  if (Elbow<_ElbowTransport)
+  {
+    Elbow++;
+  }
+  if (Elbow>_ElbowTransport)
+  {
+    Elbow--;
+  } 
+  if (Wrist<_WristTransport)
+  {
+    Wrist++;
+  }
+  if (Wrist>_WristTransport)
+  {
+    Wrist--;
+  }
+
+  if(Shoulder == _ShoulderTransport&& Elbow == _ElbowTransport && Wrist == _WristTransport)
+  {
+    if(MoveAboveCard==false)
+    {
+    moveToStack=true;
+    LiftCard=false;
+    }
+    if(MoveAboveCard==true)
+    {
+     grabCard=true;
+     MoveAboveCard=false;
+    }
+
+  }
+}
+void DropCard(uint& Shoulder, uint& Elbow, uint& Wrist, bool& moveToSearchPosition, bool& movingUp, bool& dropCard)
+{
+  if(Shoulder<_SholderDrop)
+  {
+    Shoulder++;
+  }
+	if(Shoulder>_SholderDrop)
 	{
 		Shoulder--;
 	}
-	if (Elbow>5)
+
+  if (Elbow<_ElbowDrop)
+  {
+    Elbow++;
+  }
+	if (Elbow>_ElbowDrop)
 	{
 		Elbow--;
 	}
 	
-    _DataArray[1]=Shoulder; //Shoulder
-    _DataArray[2]=Elbow; //Elbow
 
-    //move gripper into standard position
-    if(Shoulder==90 && Elbow == 5)
-    {
-    	Shoulder=95;
-    	Elbow=10;
-    	_DataArray[1]=Shoulder; //Shoulder
- 	    _DataArray[2]=Elbow; //Elbow
-
- 	    dropCard=false;
- 	    moveToSearchPosition=true;
- 	    movingUp=false;
-    }
-    //eventually add entry for magnet Implementation
+  //move gripper into standard position
+  if(Shoulder==_SholderDrop && Elbow == _ElbowDrop)
+  {
+	    dropCard=false;
+	    moveToSearchPosition=true;
+	    movingUp=false;
+  }
+  //eventually add entry for magnet Implementation
 }
 
-void MoveToSearchPosition(uint& baseAngle, bool& searching, bool& moveToSearchPosition)
+void MoveToSearchPosition(uint& baseAngle, uint& Shoulder, uint& Elbow, uint& Wrist, bool& searching, bool& moveToSearchPosition)
 {
-  if(baseAngle>170)
+  if(baseAngle>_StackAngle)
   {
     baseAngle--;
   }
-  if(baseAngle==170)
+  if(baseAngle<_StackAngle)
+  {
+    baseAngle++;
+  }
+
+  if(baseAngle==_StackAngle)
   {
     //now we listen to camera input again
     searching=true;
     moveToSearchPosition=false;
+    Shoulder=_ShoulderSearch;
+    Elbow=_ElbowSearch;
+    Wrist=_WristSearch;
   }
 }
 
@@ -173,9 +254,9 @@ int main(int argc, char **argv)
 
 	//intialization
   _DataArray[0]=_BaseAngle ; //Base
-  _DataArray[1]=_Elbow; //Shoulder
-  _DataArray[2]=_Shoulder; //Elbow
-  _DataArray[3]=uint(10); //WristVertical
+  _DataArray[1]=_Shoulder; //Shoulder
+  _DataArray[2]=_Elbow; //Elbow
+  _DataArray[3]=_WristSearch; //WristVertical
   _DataArray[4]=uint(90); //WristRotation
   _DataArray[5]=uint(73); //Gripper Closed
 
@@ -243,7 +324,7 @@ int main(int argc, char **argv)
       _CurrentLabel="none";
       ROS_INFO("I found the first Memory Card");
       _Searching = false;
-      _GrabCard = true;
+      _MoveAboveCard=true;
     }
 
 
@@ -255,21 +336,32 @@ int main(int argc, char **argv)
       //stop searching
       _Searching=false;
       //grab Card
-      _GrabCard = true;
+      _MoveAboveCard=true;
     }
 
 
     if(_Searching==true)
     {
       movingInCircle(_BaseAngle, _MovingUp);
-      //moving up and down from 0 to 170°
+      //moving up and down from 0 to _StackAngle°
     }
  
     //grab the card where it is currently above
     if(_GrabCard==true )
     {
       //grab Card and move it to stack
-      grabCard(_Shoulder, _Elbow, _MoveToStack, _GrabCard);
+      grabCard(_Shoulder, _Elbow, _Wrist, _LiftCard, _GrabCard);
+    }
+
+    if(_MoveAboveCard== true)
+    {
+      LiftGripper(_Shoulder, _Elbow, _Wrist, _MoveToStack, _LiftCard, _MoveAboveCard, _GrabCard);
+    }
+
+
+    if(_LiftCard == true)
+    {
+      LiftGripper(_Shoulder, _Elbow, _Wrist, _MoveToStack, _LiftCard, _MoveAboveCard, _GrabCard);
     }
 
     if(_MoveToStack==true)
@@ -282,7 +374,7 @@ int main(int argc, char **argv)
 
     if(_DropCard==true)
     {
-    	DropCard(_Shoulder, _Elbow, _MoveToSearchPosition, _MovingUp, _DropCard);
+    	DropCard(_Shoulder, _Elbow,_Wrist, _MoveToSearchPosition, _MovingUp, _DropCard);
     	//sets searching to true
     	//moving up to false -> move direction 0
     	//sets dropCard false
@@ -290,13 +382,20 @@ int main(int argc, char **argv)
 
     if(_MoveToSearchPosition==true)
     {
-      MoveToSearchPosition(_BaseAngle, _Searching, _MoveToSearchPosition);
+      MoveToSearchPosition(_BaseAngle, _Shoulder, _Elbow, _Wrist, _Searching, _MoveToSearchPosition);
     }
+
+  _DataArray[0]=_BaseAngle ; //Base
+  _DataArray[1]=_Shoulder; //Shoulder
+  _DataArray[2]=_Elbow; //Elbow
+  _DataArray[3]=_Wrist; //WristVertical
+  _DataArray[4]=uint(90); //WristRotation
+  _DataArray[5]=uint(73); //Gripper Closed
 
     ROS_INFO(" ");
     ROS_INFO("NumObjects: [%d]; Current Label: [%s]; _FirstDetectedLabel: [%s]", _NumObjects, _CurrentLabel.c_str(), _FirstDetectedLabel.c_str());
     ROS_INFO("_MovingUp: [%d]; _Searching: [%d], MoveToStack: [%d], DropCard: [%d], GrabCard: [%d], MoveToSearchPosition: [%d]", _MovingUp,_Searching,_MoveToStack, _DropCard, _GrabCard, _MoveToSearchPosition);
-    ROS_INFO("_BaseAngle: [%d] , _Elbow: [%d], _Shoulder: [%d]",_BaseAngle,_Elbow,_Shoulder);
+    ROS_INFO("_BaseAngle: [%d] , _Shoulder: [%d], _Elbow: [%d], _Wrist: [%d]",_BaseAngle,_Shoulder,_Elbow, _Wrist);
 
     //for loop, pushing data in the size of the array
     for (int i = 0; i < 6; i++)
