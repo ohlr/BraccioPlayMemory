@@ -9,11 +9,19 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   sensor_msgs
+  message_generation
+  darknet_ros_msgs
 )
 
+##add_message_files(
+##  FILES
+##    BoundingBox.msg
+##    BoundingBoxes.msg
+##)
 
 #Declare CatkinPackage
-catkin_package()
+catkin_package(CATKIN_DEPENDS 
+  message_runtime)
 
 
 install(DIRECTORY parse_and_publish

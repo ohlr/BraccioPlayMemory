@@ -1,5 +1,5 @@
 classes= 10 
-train  = /home/oskar/OneDrive/YoloV2/darknet/data/train.txt
-valid  = /home/oskar/OneDrive/YoloV2/darknet/data/test.txt 
-names = obj.names  
+train  = /home/caprano/Uni/deep-learning/BraccioPlayMemory/darknet/data/train.txt
+valid  = /home/caprano/Uni/deep-learning/BraccioPlayMemory/darknet/data/test.txt 
+names = cfg/obj.names  
 backup = backup/ 
