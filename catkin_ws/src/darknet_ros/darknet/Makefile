@@ -1,6 +1,6 @@
-GPU=0
+GPU=1
 CUDNN=0
-OPENCV=0
+OPENCV=1
 DEBUG=0
 
 ARCH= -gencode arch=compute_20,code=[sm_20,sm_21] \
@@ -25,6 +25,7 @@ ARFLAGS=rcs
 OPTS=-Ofast
 LDFLAGS= -lm -pthread 
 COMMON= -Iinclude/ -Isrc/
+#COMMON += -DGPU -I/usr/local/cuda/include -D_FORCE_INLINES
 CFLAGS=-Wall -Wfatal-errors -fPIC
 
 ifeq ($(DEBUG), 1) 
