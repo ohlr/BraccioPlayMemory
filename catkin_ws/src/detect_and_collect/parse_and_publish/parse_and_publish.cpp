@@ -39,6 +39,11 @@ uint _DataArray[6];
 string _CurrentLabel = "none";
 string _FirstDetectedLabel = "none";
 
+int _Xmin = 0;
+int _Ymin = 0;
+int _Xmax = 0;
+int _Ymax = 0;
+
 uint _BaseAngle = 0;
 uint _Shoulder =  _ShoulderSearch;
 uint _Elbow = _ElbowSearch;
@@ -62,7 +67,7 @@ void NumObjectsCallback(const std_msgs::Int8::ConstPtr& msg)
   {
   //ROS_INFO("I heard: [%d]",msg->data);
   _NumObjects = (uint)msg->data;
-}
+  }
 }
 
 //updated if new data arrives
@@ -72,6 +77,10 @@ void labelCallback(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg)
   {
   // ROS_INFO("I heard: [%s]", msg->boundingBoxes[0].Class.c_str());
   _CurrentLabel =  msg->boundingBoxes[0].Class.c_str();
+  _Xmin = (int) msg->boundingBoxes[0].xmin;
+  _Ymin = (int) msg->boundingBoxes[0].ymin;
+  _Xmax = (int) msg->boundingBoxes[0].xmax;
+  _Ymax = (int) msg->boundingBoxes[0].ymax;
   }
 }
 
@@ -310,6 +319,17 @@ int main(int argc, char **argv)
   
   ros::Rate loop_rate(10);
 
+  bool isCenter = false;
+  float isCenterFactor = 0.2;
+  int windowXMin = 0;
+  int windowXMax = 640;
+
+  int boundaryCenterXPosition = 0;
+  int windowDiffX = (windowXMax - windowXMin);
+  int windowCenterXPosition = windowXMin + windowDiffX / 2;
+  int windowCenterXPositionLeft = windowCenterXPosition - windowDiffX * (1 - isCenterFactor);
+  int windowCenterXPositionRight = windowCenterXPosition + windowDiffX * (1 - isCenterFactor);
+
   while (ros::ok())
   {
     std_msgs::UInt8MultiArray array;
@@ -320,27 +340,36 @@ int main(int argc, char **argv)
     //is default true
 
 
+    boundaryCenterXPosition = _Xmin + (_Xmax - _Xmin) / 2;
+    isCenter = windowCenterXPositionLeft <= boundaryCenterXPosition && boundaryCenterXPosition <= windowCenterXPositionRight;
+
     if(_NumObjects==1 && _FirstDetectedLabel == "none" && _Searching==true && _CurrentLabel!="none")
     {
-      _FirstDetectedLabel=_CurrentLabel;
-      _CurrentLabel="none";
-      ROS_INFO("I found the first Memory Card");
-      _Searching = false;
-      _MoveAboveCard=true;
-      _MagnetOn=1;
+      ROS_INFO("Center condition %d: Image(%d, %d, %d) and boundary (%d, %d)", isCenter, _Xmin, _Xmax, boundaryCenterXPosition, windowCenterXPositionLeft, windowCenterXPositionRight);
+      if (isCenter) {
+        _FirstDetectedLabel=_CurrentLabel;
+        _CurrentLabel="none";
+        ROS_INFO("I found the first Memory Card");
+        _Searching = false;
+        _MoveAboveCard=true;
+        _MagnetOn=1;
+      }
     }
 
 
 
     if(_CurrentLabel==_FirstDetectedLabel && _CurrentLabel!="none" && _Searching==true)
     {	
-      _FirstDetectedLabel="none";
-      _CurrentLabel="none";
-      //stop searching
-      _Searching=false;
-      //grab Card
-      _MoveAboveCard=true;
-      _MagnetOn=1;
+      ROS_INFO("Center condition %d: Image(%d, %d, %d) and boundary (%d, %d)", isCenter, _Xmin, _Xmax, boundaryCenterXPosition, windowCenterXPositionLeft, windowCenterXPositionRight);
+      if (isCenter) {
+        _FirstDetectedLabel="none";
+        _CurrentLabel="none";
+        //stop searching
+        _Searching=false;
+        //grab Card
+        _MoveAboveCard=true;
+        _MagnetOn=1;
+      }
     }
 
 
