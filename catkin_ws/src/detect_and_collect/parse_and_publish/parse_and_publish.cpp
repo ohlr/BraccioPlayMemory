@@ -16,13 +16,13 @@
 using namespace std;
 
 
-#define _ShoulderSearch  92
-#define _ShoulderGrab 77
+#define _ShoulderSearch  94
+#define _ShoulderGrab 66 //77
 #define _SholderDrop 90
 #define _ShoulderTransport 95
 
 #define _ElbowSearch 0
-#define _ElbowGrab 10
+#define _ElbowGrab 25 //10
 #define _ElbowDrop 15
 #define _ElbowTransport 10
 
@@ -63,11 +63,11 @@ bool _GrabCard=false;
 //updated cyclicly
 void NumObjectsCallback(const std_msgs::Int8::ConstPtr& msg)
 {
-  if(_Searching==true)
-  {
+  // if(_Searching==true)
+  // {
   //ROS_INFO("I heard: [%d]",msg->data);
   _NumObjects = (uint)msg->data;
-  }
+  // }
 }
 
 //updated if new data arrives
@@ -77,11 +77,11 @@ void labelCallback(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg)
   {
   // ROS_INFO("I heard: [%s]", msg->boundingBoxes[0].Class.c_str());
   _CurrentLabel =  msg->boundingBoxes[0].Class.c_str();
+  }
   _Xmin = (int) msg->boundingBoxes[0].xmin;
   _Ymin = (int) msg->boundingBoxes[0].ymin;
   _Xmax = (int) msg->boundingBoxes[0].xmax;
   _Ymax = (int) msg->boundingBoxes[0].ymax;
-  }
 }
 
 void movingInCircle(uint& baseAngle, bool& movingUp)
@@ -320,15 +320,16 @@ int main(int argc, char **argv)
   ros::Rate loop_rate(10);
 
   bool isCenter = false;
-  float isCenterFactor = 0.2;
+  float isCenterFactor = 0.1;
   int windowXMin = 0;
   int windowXMax = 640;
 
   int boundaryCenterXPosition = 0;
   int windowDiffX = (windowXMax - windowXMin);
   int windowCenterXPosition = windowXMin + windowDiffX / 2;
-  int windowCenterXPositionLeft = windowCenterXPosition - windowDiffX * (1 - isCenterFactor);
-  int windowCenterXPositionRight = windowCenterXPosition + windowDiffX * (1 - isCenterFactor);
+  int windowCenterXPositionLeft = windowCenterXPosition - windowDiffX * isCenterFactor;
+  int windowCenterXPositionRight = windowCenterXPosition + windowDiffX * isCenterFactor;
+  ROS_INFO("Center X Position is (%d %d) (%d %d)", windowDiffX, windowCenterXPosition, windowCenterXPositionLeft, windowCenterXPositionRight);
 
   while (ros::ok())
   {
@@ -341,11 +342,10 @@ int main(int argc, char **argv)
 
 
     boundaryCenterXPosition = _Xmin + (_Xmax - _Xmin) / 2;
-    isCenter = windowCenterXPositionLeft <= boundaryCenterXPosition && boundaryCenterXPosition <= windowCenterXPositionRight;
+    isCenter = _NumObjects > 0 && windowCenterXPositionLeft <= boundaryCenterXPosition && boundaryCenterXPosition <= windowCenterXPositionRight;
 
     if(_NumObjects==1 && _FirstDetectedLabel == "none" && _Searching==true && _CurrentLabel!="none")
     {
-      ROS_INFO("Center condition %d: Image(%d, %d, %d) and boundary (%d, %d)", isCenter, _Xmin, _Xmax, boundaryCenterXPosition, windowCenterXPositionLeft, windowCenterXPositionRight);
       if (isCenter) {
         _FirstDetectedLabel=_CurrentLabel;
         _CurrentLabel="none";
@@ -360,10 +360,10 @@ int main(int argc, char **argv)
 
     if(_CurrentLabel==_FirstDetectedLabel && _CurrentLabel!="none" && _Searching==true)
     {	
-      ROS_INFO("Center condition %d: Image(%d, %d, %d) and boundary (%d, %d)", isCenter, _Xmin, _Xmax, boundaryCenterXPosition, windowCenterXPositionLeft, windowCenterXPositionRight);
       if (isCenter) {
         _FirstDetectedLabel="none";
         _CurrentLabel="none";
+        ROS_INFO("I found the second Memory Card");
         //stop searching
         _Searching=false;
         //grab Card
@@ -429,6 +429,14 @@ int main(int argc, char **argv)
     ROS_INFO("NumObjects: [%d]; Current Label: [%s]; _FirstDetectedLabel: [%s]", _NumObjects, _CurrentLabel.c_str(), _FirstDetectedLabel.c_str());
     ROS_INFO("_MovingUp: [%d]; _Searching: [%d], MoveToStack: [%d], DropCard: [%d], GrabCard: [%d], MoveToSearchPosition: [%d]", _MovingUp,_Searching,_MoveToStack, _DropCard, _GrabCard, _MoveToSearchPosition);
     ROS_INFO("_BaseAngle: [%d] , _Shoulder: [%d], _Elbow: [%d], _Wrist: [%d], MagnetOn: [%d]",_BaseAngle,_Shoulder,_Elbow, _Wrist, _MagnetOn);
+
+    if(_NumObjects==0) 
+    {
+      ROS_INFO("No object detected");
+    }
+    else {
+      ROS_INFO("Center condition %d: Image(%d, %d, %d) and boundary (%d, %d)", isCenter, _Xmin, _Xmax, boundaryCenterXPosition, windowCenterXPositionLeft, windowCenterXPositionRight);
+    }
 
     //for loop, pushing data in the size of the array
     for (int i = 0; i < 6; i++)
