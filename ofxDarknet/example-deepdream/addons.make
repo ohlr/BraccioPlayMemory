@@ -1,3 +1,0 @@
-ofxDarknet
-ofxGui
-ofxOpenCv
