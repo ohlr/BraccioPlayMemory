@@ -74,6 +74,8 @@
 \colorlet{blocktitlebgcolor}{TumBlue}
 \colorlet{backgroundcolor}{white}
 
+\graphicspath{ {images/} }
+
 % title matter
 \title{Object Detection within a Robotic Application}
 
@@ -95,18 +97,48 @@
 
 \begin{columns}
     \column{0.5}
-    \block{Introduction}{Our idea was to teach a Braccio Robotic Arm to play the child's game pairs. It should detect the playing cards laying on the table, their position and the motif of a card and find the second one. The robot picks one playing card up, places it on the stack and searches for the second one within the remaining cards. For object detection YOLOv2-Real-Time-Object detection is used for transfer learning with datasets containing images of our playing cards. We trained our network with Google Cloud Service.}
-    \block{Dataset}{\textit{PASCAL VOC Dataset + our images?}}
-    \block{Images}{\item network from tiny yolo
+    \block{Introduction}{
+    	Our idea was to teach a Braccio Robotic Arm to play the child's game pairs. It should detect the playing cards laying on the table, their position and the motif of a card and find the second one. The robot picks one playing card up, places it on the stack and searches for the second one within the remaining cards. For object detection YOLOv2-Real-Time-Object detection is used for transfer learning with datasets containing images of our playing cards. We trained our network with Google Cloud Service.
+    }
+    \block{Dataset}{
+    	Datasets for the project could be devided into two parts. Darknet had  pre-trained on the Pascal VOC 2007+2012, and we had trained 30 images for each of the 10 classes of the playing cards.
+    	
+    	\begin{tikzfigure}[Images of 20 classes from Pasca VOC2012, which is : \\
+    	aeroplane, bicycle, bird, boat, bottle, bus, car, cat, chair, cow, diningtable, dog, horse, motorbike, person, pottedplant, sheep, sofa, train and tvmonitor. ]
+    		\includegraphics[width = 0.7\linewidth]{Pascal2012}
+    	\end{tikzfigure}
+    
+	    \begin{tikzfigure}[Training data of the playing cards. Ten classes of the cards are: \\
+		Boat, Girl, Boy, Horse, EuropeanBird, PacificBird, Flower, BlueCard, Tree, Pineapple ]
+	    	\includegraphics[width = 0.95\linewidth]{playingcard_data2}
+	    \end{tikzfigure}
+    }
+    \block{Images}{
+    	\item network from tiny yolo
+
     	\item 10 cards + classes
+    	
     	\item architecture
+    	    	
+    	\begin{tikzfigure}[Network architecture. ]
+    		\includegraphics[width = \linewidth]{figure_tiny_yolo_webcam}
+    	\end{tikzfigure}
+    	
     	\item Filters from results
-    	\item Camera input with detection labels}
+    	
+    	\item Camera input with detection labels
+    	
+    }
 
     \column{0.5}
-    \block{Related Work}{For the object detection, we used Yolo9000 with transfer learning to detect the motifs of the playing cards in real time. \textit{Add table? Add link?}\\The communication between the Braccio Robotic Arm and the computer is enabled with ROS. \textit{Also with the Arduino?}}
-    \block{Data and Statistics}{Content in your block.}
-    \block{Methodology}{\begin{itemize}
+    \block{Related Work}{
+    	For the object detection, we used Yolo9000 with transfer learning to detect the motifs of the playing cards in real time. \textit{Add table? Add link?}\\The communication between the Braccio Robotic Arm and the computer is enabled with ROS. \textit{Also with the Arduino?}
+    }
+    \block{Data and Statistics}{
+    	Content in your block.
+    }
+    \block{Methodology}{
+    	\begin{itemize}
     		\item Input stream from camera
     		\item Send stream to computer
     		\item Pre-trained Yolo detects motifs of playing cards
@@ -115,7 +147,10 @@
     		\item Robot searches for card with the same motif
     		\item If detected, it picks it up and places it on the stack
     		\item Robot starts looking for a new pair of playing cards
-    	\end{itemize}\textit{Description of network architecture?} \textit{How well did our model perform during training?}}
+    	\end{itemize}
+    	\textit{Description of network architecture?} \textit{How well did our model perform during training?}
+    	
+    }
 \end{columns}
 
 \end{document}
