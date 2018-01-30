@@ -158,7 +158,7 @@ if __name__ == '__main__':
     num_list = [3, 16, 16, 32, 32, 64, 64, 128, 128, 256, 256, 512, 512, 1024, 1024, 75] 
     x_diff_list = [0, layer_width, layer_width, layer_width, layer_width, layer_width, layer_width, layer_width, \
                     layer_width, layer_width, layer_width, layer_width, layer_width, layer_width, layer_width, layer_width]
-    text_list = ['Inputs'] + ['Feature\nmaps'] + ['F. maps'] * (len(size_list) - 2)
+    text_list = ['Inputs'] + ['Feature\nmaps'] + ['F. maps'] * (len(size_list) - 3) +['Outputs']
     loc_diff_list = [[3, -3]] * len(size_list)  # distance between maps in same layer
     num_show_list = list(map(min, num_list, [NumConvMax] * len(num_list)))
     top_left_list = np.c_[np.cumsum(x_diff_list), np.zeros(len(x_diff_list))]

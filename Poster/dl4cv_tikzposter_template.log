@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.29)  29 JAN 2018 22:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.29)  30 JAN 2018 02:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1326,22 +1326,36 @@ File: images/playingcard_data2.png Graphic file (type png)
 Package pdftex.def Info: images/playingcard_data2.png used on input line 115.
 (pdftex.def)             Requested size: 1492.05774pt x 153.99661pt.
 
-<images/figure_tiny_yolo_webcam.png, id=33, 984.3174pt x 142.3719pt>
+<images/figure_tiny_yolo_webcam.png, id=33, 1037.7972pt x 137.313pt>
 File: images/figure_tiny_yolo_webcam.png Graphic file (type png)
 
 <use images/figure_tiny_yolo_webcam.png>
 Package pdftex.def Info: images/figure_tiny_yolo_webcam.png used on input line 
 131.
-(pdftex.def)             Requested size: 1570.59215pt x 227.18488pt.
+(pdftex.def)             Requested size: 1570.59215pt x 207.81696pt.
 \my@colheighta=\dimen324
-LaTeX Font Info:    Try loading font information for OMS+aer on input line 153.
+
+<images/Rosgraph.png, id=34, 1468.48625pt x 350.30875pt>
+File: images/Rosgraph.png Graphic file (type png)
+
+<use images/Rosgraph.png>
+Package pdftex.def Info: images/Rosgraph.png used on input line 145.
+(pdftex.def)             Requested size: 1091.4431pt x 260.379pt.
+
+<images/hardware_structure.png, id=35, 916.3836pt x 264.99pt>
+File: images/hardware_structure.png Graphic file (type png)
+
+<use images/hardware_structure.png>
+Package pdftex.def Info: images/hardware_structure.png used on input line 145.
+(pdftex.def)             Requested size: 1091.4431pt x 315.61292pt.
+LaTeX Font Info:    Try loading font information for OMS+aer on input line 162.
 
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/ae/omsaer.fd
 File: omsaer.fd 1999/12/27
 )
 LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <29.86> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 153.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 162.
 \my@colheightb=\dimen325
 \my@maxcolheight=\dimen326
 \my@colheight@loop=\dimen327
@@ -1349,25 +1363,27 @@ LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <29.86> not available
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./tum_l
 ogo.pdf> <./images/Pascal2012.png> <./images/playingcard_data2.png> <./images/f
-igure_tiny_yolo_webcam.png>] (./dl4cv_tikzposter_template.aux) ) 
+igure_tiny_yolo_webcam.png> <./images/Rosgraph.png> <./images/hardware_structur
+e.png>]
+(./dl4cv_tikzposter_template.aux) ) 
 Here is how much of TeX's memory you used:
- 27341 strings out of 492995
- 695493 string characters out of 6132704
- 945530 words of memory out of 5000000
- 30323 multiletter control sequences out of 15000+600000
+ 27351 strings out of 492995
+ 695757 string characters out of 6132704
+ 946529 words of memory out of 5000000
+ 30331 multiletter control sequences out of 15000+600000
  42828 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,9n,96p,841b,907s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/tex
-live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texliv
-e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on dl4cv_tikzposter_template.pdf (1 page, 1061203 bytes).
+ 62i,9n,96p,841b,917s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2017/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2017/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmti12.pfb>
+Output written on dl4cv_tikzposter_template.pdf (1 page, 1530526 bytes).
 PDF statistics:
- 68 PDF objects out of 1000 (max. 8388607)
+ 72 PDF objects out of 1000 (max. 8388607)
  36 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 129 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 139 words of extra memory for PDF output out of 10000 (max. 10000000)
 
