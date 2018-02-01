@@ -18,6 +18,7 @@
 \usetitlestyle{Default}
 \useblockstyle{Default}
 
+
 %%%%%%%%%%% redefine title matter to include one logo on each side of the title; adjust with \LogoSep
 \makeatletter
 \newcommand\insertlogoi[2][]{\def\@insertlogoi{\includegraphics[#1]{#2}}}
@@ -102,64 +103,105 @@
     }
     \block{Dataset}{
     	Datasets for the project could be devided into two parts. Darknet had  pre-trained on the Pascal VOC 2007+2012, and we had trained 30 images for each of the 10 classes of the playing cards.
+    	\bfseries Add sample label from our dataset \normalfont
     	
-    	\begin{tikzfigure}[Images of 20 classes from Pasca VOC2012, which is : \\
-    	aeroplane, bicycle, bird, boat, bottle, bus, car, cat, chair, cow, diningtable, dog, horse, motorbike, person, pottedplant, sheep, sofa, train and tvmonitor. ]
-    		\includegraphics[width = 0.7\linewidth]{Pascal2012}
-    	\end{tikzfigure}
-    
+%    	\begin{tikzfigure}[Images of 20 classes from Pasca VOC2012, which is : \\
+%    	aeroplane, bicycle, bird, boat, bottle, bus, car, cat, chair, cow, diningtable, dog, horse, motorbike, person, pottedplant, sheep, sofa, train and tvmonitor. ]
+%    		\includegraphics[width = 0.7\linewidth]{Pascal2012}
+%    	\end{tikzfigure}
+
 	    \begin{tikzfigure}[Training data of the playing cards. Ten classes of the cards are: \\
 		Boat, Girl, Boy, Horse, EuropeanBird, PacificBird, Flower, BlueCard, Tree, Pineapple ]
 	    	\includegraphics[width = 0.95\linewidth]{playingcard_data2}
 	    \end{tikzfigure}
     }
-    \block{Images}{
-    	\item network from tiny yolo
-
-    	\item 10 cards + classes
-    	
-    	\item architecture
-    	    	
-    	\begin{tikzfigure}[Network architecture. ]
-    		\includegraphics[width = \linewidth]{figure_tiny_yolo_webcam}
-    	\end{tikzfigure}
-    	
-    	\item Filters from results
-    	
-    	\item Camera input with detection labels
-    	
+    \block{Related Work}{
+	  \begin{minipage}{\columnwidth}
+	  		    	\begin{minipage}{800 pt}
+	  		    		       	For the object detection, we used Yolo9000 with transfer learning to detect the motifs of the playing cards in real time. \textit{Add table? Add link?}\\The communication between the Braccio Robotic Arm and the computer is enabled with ROS. \textit{Also with the Arduino?}
+	  		    		       	\bfseries
+	  		    		       	How does Yolo train the bounding boxes and labels at same time\\ 
+	  		    		       	What makes it fast and accurate?
+	  		    		       	\normalfont
+	  		    	\end{minipage}
+	  		    	\hspace{50 pt}
+	  		    	\begin{minipage}{500 pt}
+	  		    		       	\begin{tikzfigure}[Network architecture. ]
+	  		    		       		\includegraphics[width = 500 px]{images/YoloV2_Acc_Speed.jpg}
+	  		    		       	\end{tikzfigure}
+	  		    	\end{minipage}
+	  \end{minipage}       	
     }
 
     \column{0.5}
-    \block{Related Work}{
-    	For the object detection, we used Yolo9000 with transfer learning to detect the motifs of the playing cards in real time. \textit{Add table? Add link?}\\The communication between the Braccio Robotic Arm and the computer is enabled with ROS. \textit{Also with the Arduino?}
-    	
-    	\begin{tikzfigure}[System structure under ROS (Robot Operating System)]
-    		\includegraphics[width = 0.7\linewidth]{Rosgraph}
-    	\end{tikzfigure}
-    
-    	\begin{tikzfigure}[Hardware setup]
-    		\includegraphics[width = 0.7\linewidth]{hardware_structure}
-    	\end{tikzfigure}
-    	
-    }
-    \block{Data and Statistics}{
-    	Content in your block.
-    }
+
     \block{Methodology}{
-    	\begin{itemize}
-    		\item Input stream from camera
-    		\item Send stream to computer
-    		\item Pre-trained Yolo detects motifs of playing cards
-    		\item If card is detected, command is sent to robot to pick it up with help of a magnet and a metal strip attached on the back of the card
-    		\item Card is put on stack
-    		\item Robot searches for card with the same motif
-    		\item If detected, it picks it up and places it on the stack
-    		\item Robot starts looking for a new pair of playing cards
-    	\end{itemize}
+		     \bfseries{Network Architecture}\\
+		     \normalfont
+	    	\begin{tikzfigure}[Network architecture. ]
+	    		\includegraphics[width = \linewidth]{figure_tiny_yolo_webcam}
+	    	\end{tikzfigure}
+
+	    	\bfseries Text about Transfer learning and network architecture, training - validation set\normalfont
+%   	    	\begin{tikzfigure}[System structure under ROS (Robot Operating System)]
+%   	    		\includegraphics[width = 0.7\linewidth]{Rosgraph}
+%   	    	\end{tikzfigure}
+   	    	
+
+ 				\begin{minipage}{\columnwidth}
+ 					\begin{minipage}{800 pt}
+			  	    	\begin{tikzfigure}[Hardware setup]
+			  	    		\includegraphics[width = 800 pt]{hardware_structure2}
+			  	    	\end{tikzfigure}
+ 					\end{minipage}
+ 					\hspace{50 pt}
+ 					\begin{minipage}{500 pt}
+ 						\bfseries{Hardware Architecture (shorter)}
+ 						\normalfont
+ 						\begin{itemize}
+			    		\item Input stream from camera
+			    		\item Send stream to computer
+			    		\item Pre-trained Yolo detects motifs of playing cards
+			    		\item If card is detected, command is sent to robot to pick it up with help of a magnet and a metal strip attached on the back of the card
+			    		\item Card is put on stack
+			    		\item Robot searches for card with the same motif
+			    		\item If detected, it picks it up and places it on the stack
+			    		\item Robot starts looking for a new pair of playing cards
+ 						\end{itemize}
+ 					\end{minipage}
+ 				\end{minipage}
+    	    
+
     	\textit{Description of network architecture?} \textit{How well did our model perform during training?}
     	
     }
+        \block{Outcome}{
+			\begin{minipage}{\columnwidth}
+			    		  	\begin{minipage}{800 pt}
+				        	\begin{tikzfigure}
+				        		\includegraphics[height=300 px]{images/predictions3.jpg}
+				        		\label{fig:predictions}
+				        	\end{tikzfigure}
+			    		  	\end{minipage}
+			    		  	\hspace{50 pt}
+			    		  	\begin{minipage}{500 pt}
+					        	\begin{itemize}
+					        		
+					        		\item network from tiny yolo
+					        		
+					        		\item 10 cards + classes
+					        		
+					        		\item architecture
+					        		
+					        		
+					        		\item Filters from results
+					        		
+					        		\item Camera input with detection labels
+					        	\end{itemize}
+			    		  	\end{minipage}
+			\end{minipage}
+			\bfseries Add image with weights
+        }
 \end{columns}
 
 \end{document}
