@@ -118,11 +118,17 @@
     \block{Related Work}{
 	  \begin{minipage}{\columnwidth}
 	  		    	\begin{minipage}{800 pt}
-	  		    		       	For the object detection, we used Yolo9000 with transfer learning to detect the motifs of the playing cards in real time. \textit{Add table? Add link?}\\The communication between the Braccio Robotic Arm and the computer is enabled with ROS. \textit{Also with the Arduino?}
+	  		    		       	For the object detection, we used Yolo9000 with transfer learning to detect the motifs of the playing cards in real time. \textit{Add table? Add link?}\\The communication between the Braccio Robotic Arm and the computer is enabled with ROS. \textit{Also with the Arduino?} \\
 	  		    		       	\bfseries
-	  		    		       	How does Yolo train the bounding boxes and labels at same time\\ 
+	  		    		       	How does Yolo train the bounding boxes and labels at same time?
+	  		    		       	\normalfont
+	  		    		       	Yolo uses anchor boxes to predict bounding boxes\\
+	  		    		       	Labels trained with ImageNet at the full 448 x 448 resolution for 10 epochs \\
+	  		    		       	\bfseries 
 	  		    		       	What makes it fast and accurate?
 	  		    		       	\normalfont
+	  		    		       	Simplify network, make representations easier to learn\\
+	  		    		       	Don't use VGG-16 network, but custom network based on Googlenet architecture (less accurate)
 	  		    	\end{minipage}
 	  		    	\hspace{50 pt}
 	  		    	\begin{minipage}{500 pt}
@@ -158,22 +164,11 @@
  					\begin{minipage}{500 pt}
  						\bfseries{Hardware Architecture (shorter)}
  						\normalfont
- 						\begin{itemize}
-			    		\item Input stream from camera
-			    		\item Send stream to computer
-			    		\item Pre-trained Yolo detects motifs of playing cards
-			    		\item If card is detected, command is sent to robot to pick it up with help of a magnet and a metal strip attached on the back of the card
-			    		\item Card is put on stack
-			    		\item Robot searches for card with the same motif
-			    		\item If detected, it picks it up and places it on the stack
-			    		\item Robot starts looking for a new pair of playing cards
- 						\end{itemize}
+						We used a pre-trained TinyYolo net (see figure 3). It has only 15 layers (Yolo has 30), which makes it much faster, but also less accurate. The architecture consits of 9 convolutional and 6 pooling layers. We adjusted some parameters \bfseries{which ones again? I forgot}\\
+						\normalfont We trained the last two convolutional layers with our dataset to extract the middle and high level features. The results were very accurate.\\
+						Our hardware architecture consists of a PC, an Arduino UNO, an electromagnet, a camera and the Braccio Robot Arm. They communicate with ROS.
  					\end{minipage}
  				\end{minipage}
-    	    
-
-    	\textit{Description of network architecture?} \textit{How well did our model perform during training?}
-    	
     }
         \block{Outcome}{
 			\begin{minipage}{\columnwidth}
