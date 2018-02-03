@@ -24,7 +24,7 @@ run on webcam
 
 run on image
 ```bash
-./darknet detector test cfg/obj.data cfg/yolo-obj.cfg  backup/yolo-obj_100.weights data/obj/IMAG3635.jpg -thresh 20  
+./darknet detector test cfg/obj.data cfg/yolo-obj.cfg  backup/yolo-obj_100.weights data/obj/IMAG3635.jpg -thresh 0.45  
 ```
 
 -thresh 20 determines the threshold

@@ -16,13 +16,13 @@
 using namespace std;
 
 
-#define _ShoulderSearch  92
-#define _ShoulderGrab 77
+#define _ShoulderSearch 100
+#define _ShoulderGrab 90
 #define _SholderDrop 90
 #define _ShoulderTransport 95
 
 #define _ElbowSearch 0
-#define _ElbowGrab 10
+#define _ElbowGrab 0
 #define _ElbowDrop 15
 #define _ElbowTransport 10
 
