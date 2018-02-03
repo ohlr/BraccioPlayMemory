@@ -1,0 +1,6 @@
+devel/
+logs/
+build/
+bin/
+lib/
+.DS_Store
