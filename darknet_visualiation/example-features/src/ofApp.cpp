@@ -11,14 +11,14 @@ void ofApp::setup()
     
     darknet.init( cfgfile, weightfile, nameslist );
 
-	inputMode = 0;
+	inputMode = 1;
     
     numClassifications = 10;
 	if( inputMode == 0 ) {
         setSourceWebcam();
 	}
 	else {
-		setSourceImage(ofToDataPath("kitty.jpg") );
+		setSourceImage(ofToDataPath("IMAG3762.JPEG") );
 	}
 }
 
@@ -66,7 +66,7 @@ void ofApp::draw() {
         ofDrawRectangle(10 + 105 * col, 375+23*row, 100, 20);
         ofDrawBitmapString(layerNames[i], 15 + 105 * col, 392+23*row);
     }
-    ofSetColor(255);
+    ofSetColor(0, 255, 0);
     ofDrawBitmapString("drag feature maps to scroll", 5, ofGetHeight()-5);
     
     // draw feature maps
@@ -79,7 +79,7 @@ void ofApp::draw() {
 }
 
 void ofApp::drawClassifications() {
-    ofSetColor(255);
+    ofSetColor(0, 255, 0);
     ofDrawBitmapString("Classifications ("+ofToString(ofGetFrameRate(),0,1)+" fps)", 325, 18);
     
     ofTranslate(325, 0);
@@ -98,23 +98,29 @@ void ofApp::drawClassifications() {
 void ofApp::drawFeatureMaps() {
     maps = darknet.getFeatureMaps(layer);
 
-    ofSetColor(255);
+	ofSetColor(0, 255, 0);
     int w = darknet.getNetwork().layers[layer].out_w;   // width of output volume
     int h = darknet.getNetwork().layers[layer].out_h;   // height of output volume
     int n = darknet.getNetwork().layers[layer].out_c;   // depth of output volume
     string msg = "Layer #"+ofToString(layer)+": "+darknet.getLayerNames()[layer]+", output volume size (depth, height, width) = "+ofToString(n)+" x "+ofToString(h)+" x "+ofToString(w);
     ofDrawBitmapString(msg, 325, 18);
     
+	int noItemsPerColumn = 4;
+	int imageMargin = 5;
+	int imageWidth = 192;
+	int imageHeight = 192;
+	int imageWidthAndMargin = imageWidth + imageMargin;
+	int imageHeightAndMargin = imageHeight + imageMargin;
     ofTranslate(325, 25);
-    maxPageLength = ceil(maps.size() / 8) * 105;
+    maxPageLength = ceil(maps.size() / noItemsPerColumn) * 105;
     ofImage img;
     img.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
     for (int m=0; m<maps.size(); m++) {
         maps[m].getImage(img);
         ofPushMatrix();
-        ofTranslate((m%8)*105,
-                    floor(m/8)*105 - scroll);
-        img.draw(0, 0, 100, 100);
+        ofTranslate((m%noItemsPerColumn)*imageWidthAndMargin,
+                    floor(m/ noItemsPerColumn)*imageHeightAndMargin - scroll);
+        img.draw(0, 0, imageWidth, imageHeight);
         ofPopMatrix();
     }
     
@@ -123,16 +129,16 @@ void ofApp::drawFeatureMaps() {
         activations map = maps[highlighted];
         map.getImage(img);
         ofPushMatrix();
-        ofTranslate(ofClamp((highlighted%8)*105 - 50, 0, ofGetWidth()-220),
-                    ofClamp(floor(highlighted/8)*105 - scroll - 50,
-                            20, ofGetHeight()-220));
+        ofTranslate(ofClamp((highlighted % noItemsPerColumn)*imageWidthAndMargin - imageWidth/2, 0, ofGetWidth()- 2*(imageWidth + 2* imageMargin)),
+                    ofClamp(floor(highlighted/ noItemsPerColumn)*imageHeightAndMargin - scroll - imageHeight / 2,
+                            20, ofGetHeight()- 2 * (imageHeight + 2 * imageMargin)));
         ofSetColor(0, 255, 0);
         ofFill();
-        ofDrawRectangle(-10, -25, 220, 235);
+        ofDrawRectangle(-10, -25, imageWidth*2 + 20, 2* imageHeight + 25);
         ofSetColor(0);
         ofDrawBitmapString(darknet.getLayerNames()[layer]+" - "+ofToString(highlighted), 0, -2);
         ofSetColor(255);
-        img.draw(0, 0, 200, 200);
+        img.draw(0, 0, imageWidth * 2, imageHeight * 2);
         ofPopMatrix();
     }
 }
