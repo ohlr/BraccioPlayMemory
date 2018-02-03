@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.27)  2 FEB 2018 18:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.27)  3 FEB 2018 14:03
 entering extended mode
 **./dl4cv_tikzposter_template.tex
 (dl4cv_tikzposter_template.tex
@@ -1408,17 +1408,17 @@ ne 117.
 <images/YoloV2_Acc_Speed.jpg, id=31, 1175.39125pt x 1032.85875pt>
 File: images/YoloV2_Acc_Speed.jpg Graphic file (type jpg)
 <use images/YoloV2_Acc_Speed.jpg>
-Package pdftex.def Info: images/YoloV2_Acc_Speed.jpg  used on input line 140. o
-n input line 140.
+Package pdftex.def Info: images/YoloV2_Acc_Speed.jpg  used on input line 132. o
+n input line 132.
 Package pdftex.def Info: Requested size: 501.87683pt x 441.01585pt on input lin
-e 140.
+e 132.
 
-Overfull \hbox (1.87683pt too wide) in paragraph at lines 140--140
+Overfull \hbox (1.87683pt too wide) in paragraph at lines 132--132
  [] 
  []
 
 
-Overfull \hbox (1812.44052pt too wide) in paragraph at lines 140--140
+Overfull \hbox (1812.44052pt too wide) in paragraph at lines 132--132
 []$[]$
  []
 
@@ -1427,37 +1427,37 @@ Overfull \hbox (1812.44052pt too wide) in paragraph at lines 140--140
 File: images/figure_tiny_yolo_webcam.png Graphic file (type png)
 <use images/figure_tiny_yolo_webcam.png>
 Package pdftex.def Info: images/figure_tiny_yolo_webcam.png  used on input line
- 172. on input line 172.
+ 161. on input line 161.
 Package pdftex.def Info: Requested size: 1559.21123pt x 206.31049pt on input li
-ne 172.
+ne 161.
 <images/hardware_structure2.png, id=33, 916.3836pt x 264.99pt>
 File: images/hardware_structure2.png Graphic file (type png)
 <use images/hardware_structure2.png>
-Package pdftex.def Info: images/hardware_structure2.png  used on input line 172
-. on input line 172.
-Package pdftex.def Info: Requested size: 800.0pt x 231.33598pt on input line 17
-2.
+Package pdftex.def Info: images/hardware_structure2.png  used on input line 161
+. on input line 161.
+Package pdftex.def Info: Requested size: 800.0pt x 231.33598pt on input line 16
+1.
 
-Overfull \hbox (1823.82144pt too wide) in paragraph at lines 172--172
+Overfull \hbox (1823.82144pt too wide) in paragraph at lines 161--161
 []$[]$
  []
 
 <images/predictions3.jpg, id=34, 3051.4pt x 1525.7pt>
 File: images/predictions3.jpg Graphic file (type jpg)
 <use images/predictions3.jpg>
-Package pdftex.def Info: images/predictions3.jpg  used on input line 199. on in
-put line 199.
+Package pdftex.def Info: images/predictions3.jpg  used on input line 188. on in
+put line 188.
 Package pdftex.def Info: Requested size: 602.21422pt x 301.1261pt on input line
- 199.
-LaTeX Font Info:    Try loading font information for OMS+aer on input line 199.
+ 188.
+LaTeX Font Info:    Try loading font information for OMS+aer on input line 188.
 
 ("C:\Users\f-ee_000\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ae\omsaer.fd"
 File: omsaer.fd 1999/12/27
 )
 LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <29.86> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 199.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 188.
 
-Overfull \hbox (1823.82144pt too wide) in paragraph at lines 199--199
+Overfull \hbox (1823.82144pt too wide) in paragraph at lines 188--188
 []$[]$
  []
 
@@ -1471,11 +1471,11 @@ go.pdf> <./images/playingcard_data2.png> <./images/YoloV2_Acc_Speed.jpg> <./ima
 ges/figure_tiny_yolo_webcam.png> <./images/hardware_structure2.png> <./images/p
 redictions3.jpg>] (dl4cv_tikzposter_template.aux) ) 
 Here is how much of TeX's memory you used:
- 27387 strings out of 493312
- 706037 string characters out of 3128522
- 944294 words of memory out of 3000000
- 30357 multiletter control sequences out of 15000+200000
- 46606 words of font info for 103 fonts, out of 3000000 for 9000
+ 27382 strings out of 493312
+ 705996 string characters out of 3128522
+ 945294 words of memory out of 3000000
+ 30356 multiletter control sequences out of 15000+200000
+ 43771 words of font info for 99 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,12n,96p,843b,1014s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/f-ee_000/AppData/L
@@ -1483,11 +1483,10 @@ ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/f-
 ee_000/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10
 .pfb><C:/Users/f-ee_000/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/am
 sfonts/cm/cmr17.pfb><C:/Users/f-ee_000/AppData/Local/Programs/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/f-ee_000/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on dl4cv_tikzposter_template.pdf (1 page, 2054308 bytes).
+type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on dl4cv_tikzposter_template.pdf (1 page, 2040830 bytes).
 PDF statistics:
- 68 PDF objects out of 1000 (max. 8388607)
+ 64 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  139 words of extra memory for PDF output out of 10000 (max. 10000000)
 

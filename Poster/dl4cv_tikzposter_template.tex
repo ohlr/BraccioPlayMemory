@@ -102,7 +102,7 @@
     	Our idea was to teach a Braccio Robotic Arm to play the child's game pairs. It should detect the playing cards laying on the table, their position and the motif of a card and find the second one. The robot picks one playing card up, places it on the stack and searches for the second one within the remaining cards. For object detection YOLOv2-Real-Time-Object detection is used for transfer learning with datasets containing images of our playing cards. We trained our network with Google Cloud Service.
     }
     \block{Dataset}{
-    	Datasets for the project could be devided into two parts. Darknet had  pre-trained on the Pascal VOC 2007+2012, and we had trained 30 images for each of the 10 classes of the playing cards.
+    	Datasets for the project could be divided into two parts. Darknet has pre-trained on the Pascal VOC 2007+2012, and we trained 30 images for each of the 10 classes of the playing cards.
     	\bfseries Add sample label from our dataset \normalfont
     	
 %    	\begin{tikzfigure}[Images of 20 classes from Pasca VOC2012, which is : \\
@@ -118,17 +118,9 @@
     \block{Related Work}{
 	  \begin{minipage}{\columnwidth}
 	  		    	\begin{minipage}{800 pt}
-	  		    		       	For the object detection, we used Yolo9000 with transfer learning to detect the motifs of the playing cards in real time. \textit{Add table? Add link?}\\The communication between the Braccio Robotic Arm and the computer is enabled with ROS. \textit{Also with the Arduino?} \\
-	  		    		       	\bfseries
-	  		    		       	How does Yolo train the bounding boxes and labels at same time?
-	  		    		       	\normalfont
-	  		    		       	Yolo uses anchor boxes to predict bounding boxes\\
-	  		    		       	Labels trained with ImageNet at the full 448 x 448 resolution for 10 epochs \\
-	  		    		       	\bfseries 
-	  		    		       	What makes it fast and accurate?
-	  		    		       	\normalfont
-	  		    		       	Simplify network, make representations easier to learn\\
-	  		    		       	Don't use VGG-16 network, but custom network based on Googlenet architecture (less accurate)
+	  		    		       	For the object detection, we used YOLOv2 respectivly Tiny YOLO with transfer learning to detect the motifs of the playing cards in real time.\\
+	  		    		       	YOLOv2 trains the labels and the bounding boxes at the same time with a joint dataset consisting of one for classification and one for detection. If an image from the detection dataset is detected, it backpropagates normally. If the other case is detected, the network only backpropagates the classification specific parts.\\
+	  		    		       A simplyfied network based on Goolenet architecture with additional features like batch normalization and high resolution classifiers makes YOLOv2 fast and accurate.
 	  		    	\end{minipage}
 	  		    	\hspace{50 pt}
 	  		    	\begin{minipage}{500 pt}
@@ -147,8 +139,6 @@
 	    	\begin{tikzfigure}[Network architecture. ]
 	    		\includegraphics[width = \linewidth]{figure_tiny_yolo_webcam}
 	    	\end{tikzfigure}
-
-	    	\bfseries Text about Transfer learning and network architecture, training - validation set\normalfont
 %   	    	\begin{tikzfigure}[System structure under ROS (Robot Operating System)]
 %   	    		\includegraphics[width = 0.7\linewidth]{Rosgraph}
 %   	    	\end{tikzfigure}
@@ -162,9 +152,8 @@
  					\end{minipage}
  					\hspace{50 pt}
  					\begin{minipage}{500 pt}
- 						\bfseries{Hardware Architecture (shorter)}
  						\normalfont
-						We used a pre-trained TinyYolo net (see figure 3). It has only 15 layers (Yolo has 30), which makes it much faster, but also less accurate. The architecture consits of 9 convolutional and 6 pooling layers. We adjusted some parameters \bfseries{which ones again? I forgot}\\
+						We used a pre-trained Tiny YOLO network (see figure 3). It has only 15 layers (Yolo has 30), which makes it much faster, but also less accurate. The architecture consits of 9 convolutional and 6 pooling layers. We adjusted some parameters \bfseries{which ones again? I forgot}\\
 						\normalfont We trained the last two convolutional layers with our dataset to extract the middle and high level features. The results were very accurate.\\
 						Our hardware architecture consists of a PC, an Arduino UNO, an electromagnet, a camera and the Braccio Robot Arm. They communicate with ROS.
  					\end{minipage}
@@ -182,11 +171,11 @@
 			    		  	\begin{minipage}{500 pt}
 					        	\begin{itemize}
 					        		
-					        		\item network from tiny yolo
+					        		\item Network from Tiny YOLO
 					        		
 					        		\item 10 cards + classes
 					        		
-					        		\item architecture
+					        		\item Architecture
 					        		
 					        		
 					        		\item Filters from results
