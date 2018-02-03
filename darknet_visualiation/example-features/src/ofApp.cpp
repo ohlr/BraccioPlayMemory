@@ -79,7 +79,7 @@ void ofApp::draw() {
 }
 
 void ofApp::drawClassifications() {
-    ofSetColor(0, 255, 0);
+    ofSetColor(255);
     ofDrawBitmapString("Classifications ("+ofToString(ofGetFrameRate(),0,1)+" fps)", 325, 18);
     
     ofTranslate(325, 0);
@@ -98,7 +98,7 @@ void ofApp::drawClassifications() {
 void ofApp::drawFeatureMaps() {
     maps = darknet.getFeatureMaps(layer);
 
-	ofSetColor(0, 255, 0);
+	ofSetColor(255);
     int w = darknet.getNetwork().layers[layer].out_w;   // width of output volume
     int h = darknet.getNetwork().layers[layer].out_h;   // height of output volume
     int n = darknet.getNetwork().layers[layer].out_c;   // depth of output volume
@@ -107,8 +107,8 @@ void ofApp::drawFeatureMaps() {
     
 	int noItemsPerColumn = 4;
 	int imageMargin = 5;
-	int imageWidth = 192;
-	int imageHeight = 192;
+	int imageWidth = 150;
+	int imageHeight = 150;
 	int imageWidthAndMargin = imageWidth + imageMargin;
 	int imageHeightAndMargin = imageHeight + imageMargin;
     ofTranslate(325, 25);
