@@ -13,6 +13,8 @@
 % align columns of tikzposter; needs two compilations
 \usepackage[colalign]{column_aligned}
 
+\usepackage{gensymb}
+
 % tikzposter meta settings
 \usetheme{Default}
 \usetitlestyle{Default}
@@ -102,30 +104,36 @@
     	Our idea was to teach a Braccio Robotic Arm to play the child's game pairs. It should detect the playing cards laying on the table, their position and the motif of a card and find the second one. The robot picks one playing card up, places it on the stack and searches for the second one within the remaining cards. For object detection YOLOv2-Real-Time-Object detection is used for transfer learning with datasets containing images of our playing cards. We trained our network with Google Cloud Service.
     }
     \block{Dataset}{
-    	Datasets for the project could be divided into two parts. Darknet has pre-trained on the Pascal VOC 2007+2012, and we trained 30 images for each of the 10 classes of the playing cards.
-    	\bfseries Add sample label from our dataset \normalfont
-    	
+    	Datasets for the project could be divided into two parts. Darknet has pre-trained on the Pascal VOC 2007+2012. Our dataset consist of 30 images for each of the 10 classes of playing cards. 
+    	The labels have a format of: [category number] [object center in X] [object center in Y] [object width in X] [object width in Y].\\
+    	We devided our dataset in training data and validation data - 90 and 10 percent respectively.    
+    	Figure \ref{fig:Dataset} illustrates sample images from our dataset.
+    	The 10 different classes are named Boat, Girl, Boy, Horse, EuropeanBird, PacificBird, Flower, BlueCard, Tree and Pineapple.
 %    	\begin{tikzfigure}[Images of 20 classes from Pasca VOC2012, which is : \\
 %    	aeroplane, bicycle, bird, boat, bottle, bus, car, cat, chair, cow, diningtable, dog, horse, motorbike, person, pottedplant, sheep, sofa, train and tvmonitor. ]
 %    		\includegraphics[width = 0.7\linewidth]{Pascal2012}
 %    	\end{tikzfigure}
 
-	    \begin{tikzfigure}[Training data of the playing cards. Ten classes of the cards are: \\
-		Boat, Girl, Boy, Horse, EuropeanBird, PacificBird, Flower, BlueCard, Tree, Pineapple ]
+	    \begin{tikzfigure}[Sample images from the dataset ]
 	    	\includegraphics[width = 0.95\linewidth]{playingcard_data2}
+	    	\label{fig:Dataset}
 	    \end{tikzfigure}
     }
     \block{Related Work}{
 	  \begin{minipage}{\columnwidth}
 	  		    	\begin{minipage}{800 pt}
-	  		    		       	For the object detection, we used YOLOv2 respectivly Tiny YOLO with transfer learning to detect the motifs of the playing cards in real time.\\
+%	  		    		       	For the object detection, we used YOLOv2 respectivly Tiny YOLO with transfer learning to detect the motifs of the playing cards in real time.\\
+		  		    		    YOLOv2 is based on the Darknet-19 classification architecture, has 19 convolutional
+	  		    		       	layers and 5 maxpooling layers.\\
 	  		    		       	YOLOv2 trains the labels and the bounding boxes at the same time with a joint dataset consisting of one for classification and one for detection. If an image from the detection dataset is detected, it backpropagates normally. If the other case is detected, the network only backpropagates the classification specific parts.\\
-	  		    		       A simplyfied network based on Goolenet architecture with additional features like batch normalization and high resolution classifiers makes YOLOv2 fast and accurate.
+								What makes YOLOv2 unique is that it reshapes the input images during training within a range of 320x320 to 640-640. Therefore the detection works for high resolution and low resolution camera streams. A higher resolution yields a more accurate result with longer processing time, while a lower resolution stream behaves the other way arround. Figure \ref{fig:Yolo} illustrates that relation.
+	  		    		       %A simplyfied network based on GoogLeNet architecture with additional features like batch normalization and high resolution classifiers makes YOLOv2 fast and accurate.
 	  		    	\end{minipage}
 	  		    	\hspace{50 pt}
 	  		    	\begin{minipage}{500 pt}
-	  		    		       	\begin{tikzfigure}[Network architecture. ]
+	  		    		       	\begin{tikzfigure}[Accuracy and speed of YOLOv2 on VOC 2007 ]
 	  		    		       		\includegraphics[width = 500 px]{images/YoloV2_Acc_Speed.jpg}
+	  		    		       		\label{fig:Yolo}
 	  		    		       	\end{tikzfigure}
 	  		    	\end{minipage}
 	  \end{minipage}       	
@@ -138,12 +146,17 @@
 		     \normalfont
 	    	\begin{tikzfigure}[Network architecture. ]
 	    		\includegraphics[width = \linewidth]{figure_tiny_yolo_webcam}
+	    		\label{fig:Architecture}
 	    	\end{tikzfigure}
 %   	    	\begin{tikzfigure}[System structure under ROS (Robot Operating System)]
 %   	    		\includegraphics[width = 0.7\linewidth]{Rosgraph}
 %   	    	\end{tikzfigure}
-   	    	
-
+			We used a pre-trained Tiny YOLO network (see figure \ref{fig:Architecture}). It has 15 layers (Yolo has 30), which makes it much faster, but also less accurate. However, our dataset only comprises of 10 instead of 1000 classes. Thus, using 15 instead of 30 layers seems reasonable.\\
+			The architecture consist of 9 convolutional and 6 pooling layers. Leaky ReLUs are used for activation. \\
+			For transfer learning we only trained the last two convolutional layers for 5 epochs, therefore making use of the basic and mid level filters from tiny yolo and only changing the output mapping.\\
+			For optimization we used stochastic gradient descent with a starting
+			learning rate of 0.1, polynomial rate decay with a power of
+			4, weight decay of 0.0005 and momentum of 0.9.\\
  				\begin{minipage}{\columnwidth}
  					\begin{minipage}{800 pt}
 			  	    	\begin{tikzfigure}[Hardware setup]
@@ -151,40 +164,34 @@
 			  	    	\end{tikzfigure}
  					\end{minipage}
  					\hspace{50 pt}
- 					\begin{minipage}{500 pt}
- 						\normalfont
-						We used a pre-trained Tiny YOLO network (see figure 3). It has only 15 layers (Yolo has 30), which makes it much faster, but also less accurate. The architecture consits of 9 convolutional and 6 pooling layers. We adjusted some parameters \bfseries{which ones again? I forgot}\\
-						\normalfont We trained the last two convolutional layers with our dataset to extract the middle and high level features. The results were very accurate.\\
-						Our hardware architecture consists of a PC, an Arduino UNO, an electromagnet, a camera and the Braccio Robot Arm. They communicate with ROS.
+ 					\begin{minipage}{600 pt}
+		    		     \bfseries{Hardware Architecture}\\
+		    		     \normalfont
+						Our hardware architecture consists of a PC, an Arduino UNO, an electromagnet, a camera and the Braccio Robot Arm. The communication between the devices and the search algorithm for the playing cards are implemented in ROS.
  					\end{minipage}
  				\end{minipage}
     }
         \block{Outcome}{
-			\begin{minipage}{\columnwidth}
-			    		  	\begin{minipage}{800 pt}
-				        	\begin{tikzfigure}
-				        		\includegraphics[height=300 px]{images/predictions3.jpg}
-				        		\label{fig:predictions}
-				        	\end{tikzfigure}
-			    		  	\end{minipage}
-			    		  	\hspace{50 pt}
-			    		  	\begin{minipage}{500 pt}
-					        	\begin{itemize}
-					        		
-					        		\item Network from Tiny YOLO
-					        		
-					        		\item 10 cards + classes
-					        		
-					        		\item Architecture
-					        		
-					        		
-					        		\item Filters from results
-					        		
-					        		\item Camera input with detection labels
-					        	\end{itemize}
-			    		  	\end{minipage}
-			\end{minipage}
-			\bfseries Add image with weights
+        		\begin{minipage}{\columnwidth}
+        			\begin{minipage}{500 pt}
+		   		  		\begin{tikzfigure}
+		   		  			[Activation maps of first CONV layer]
+		   		  			\includegraphics[height=350 px]{images/activations.png}
+		   		  			\label{fig:activations}
+		   		  		\end{tikzfigure}
+   		  			\end{minipage}
+   		  			\begin{minipage}{500 pt}
+		   		  		\begin{tikzfigure}
+		   		  			[Sample output]
+		   		  			\includegraphics[height=350 px]{images/predictions3.jpg}
+		   		  			\label{fig:predictions}
+		   		  		\end{tikzfigure}		
+ 	    		  	\end{minipage}
+	   		  	\end{minipage}
+			On a GPU a camera stream with input dimensions of 480 x 480 and 30 fps, can be processed in real time.\\
+			The robot starts grabbing the card as soon the card arrives within the center of its perception. If no card is the detected it searches for cards within a range of 0 - 150\degree.
+			Figure \ref{fig:activations} illustrates the activations of the 16 filters of the first convolutional layer.
+			Figure \ref{fig:predictions} shows a sample output for two unseen images with 4 playing cards per image. The confidence of the detector can be adjusted with a threshold.
         }
 \end{columns}
 
