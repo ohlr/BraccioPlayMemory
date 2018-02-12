@@ -1,5 +1,7 @@
 # BraccioPlayMemory
 
+![demo](Demo.gif)
+
 ## Getting started
 * Install <http://wiki.ros.org/kinetic>
 * Flash an Arduino Uno with the Arduino code
